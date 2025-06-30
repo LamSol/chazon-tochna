@@ -1,4 +1,4 @@
-# Chazon
+# Chazon Tochna
 
 **Chazon** is a full-stack, cross-platform Optical Management System built with Flask.
 
