@@ -34,25 +34,33 @@ def feedback():
 
 app.secret_key = 'supersecretkey' # to be changed later for production
 
-@app.route('/customer/<int:id>')
-def view_customer(id):
-    return f"Customer ID: {id}"
+@app.route('/product/create', methods = ['GET','POST'])
+def create_product():
+    if request.method == 'POST':
+        name=request.form['name']
+        category = request.form['category']
+        price = request.form['price']
+        stock = request.form['stock']
 
-@app.route('/invoice/<int:id>')
-def view_invoice(id):
-    return f"Invoice ID: {id}"
+        # The codes below would later be changed after building the database.
+        print(f"[PRODUCT] {name} | {category} | ₹{price} | Stock: {stock}")
+        flash('New Product created successfully!')
+        return redirect(url_for('create_product'))
+    return render_template('product_create.html')
 
-@app.route('/product/<int:id>')
-def view_product(id):
-    return f"Product ID:{id}"
+@app.route('/customer/register', methods=['GET', 'POST'])
+def register_customer():
+    if request.method == 'POST':
+        name = request.form['name']
+        phone = request.form['phone']
+        email = request.form['email']
+        
+        print(f"[CUSTOMER] {name} | {phone} | {email}")
+        flash('Customer registered successfully!')
+        return redirect(url_for('register_customer'))
 
-@app.route('/search/<string:query>')
-def search(query):
-    return f"Search results for: {query}"
+    return render_template('customer_register.html')
 
-@app.route('/category/<path:category_name>')
-def category(category_name):
-    return f"Category path: {category_name}"
 
 if __name__ == '__main__':
     app.run(debug=True)
